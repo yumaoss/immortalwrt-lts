@@ -5,9 +5,9 @@
 include $(TOPDIR)/rules.mk
 include $(INCLUDE_DIR)/kernel.mk
 
-PKG_VERSION:=2024.10
+PKG_VERSION:=2025.10
 PKG_RELEASE:=1
-PKG_HASH:=b28daf4ac17e43156363078bf510297584137f6df50fced9b12df34f61a92fb0
+PKG_HASH:=b4f032848e56cc8f213ad59f9132c084dbbb632bc29176d024e58220e0efdf4a
 
 PKG_MAINTAINER:=Sarah Maedel <openwrt@tbspace.de>
 
@@ -36,7 +36,7 @@ endef
 
 define U-Boot/rock-pi-s-rk3308
   $(U-Boot/rk3308/Default)
-  DEPENDS:=+PACKAGE_u-boot-$(1):trusted-firmware-a-rk3308-rock-pi-s
+  DEPENDS:=+PACKAGE_u-boot-$(1):trusted-firmware-a-rk3308-tpl-rock-pi-s
   TPL:=$(RK3308_TPL_ROCK_PI_S)
   NAME:=ROCK Pi S
   BUILD_DEVICES:= \
@@ -71,6 +71,13 @@ define U-Boot/nanopi-r2s-rk3328
   NAME:=NanoPi R2S
   BUILD_DEVICES:= \
     friendlyarm_nanopi-r2s
+endef
+
+define U-Boot/nanopi-r2s-plus-rk3328
+  $(U-Boot/rk3328/Default)
+  NAME:=NanoPi R2S Plus
+  BUILD_DEVICES:= \
+    friendlyarm_nanopi-r2s-plus
 endef
 
 define U-Boot/orangepi-r1-plus-rk3328
@@ -172,6 +179,45 @@ define U-Boot/rockpro64-rk3399
   NAME:=RockPro64
   BUILD_DEVICES:= \
     pine64_rockpro64
+endef
+
+
+# RK3528 boards
+
+define U-Boot/rk3528/Default
+  BUILD_SUBTARGET:=armv8
+  DEPENDS:=+PACKAGE_u-boot-$(1):trusted-firmware-a-rk3528
+  ATF:=$(RK3528_ATF)
+  TPL:=$(RK3528_TPL)
+endef
+
+define U-Boot/mangopi-m28c-rk3528
+  $(U-Boot/rk3528/Default)
+  NAME:=MangoPi M28C
+  BUILD_DEVICES:= \
+    widora_mangopi-m28c
+endef
+
+define U-Boot/mangopi-m28k-rk3528
+  $(U-Boot/rk3528/Default)
+  NAME:=MangoPi M28K
+  BUILD_DEVICES:= \
+    widora_mangopi-m28k
+endef
+
+define U-Boot/radxa-e20c-rk3528
+  $(U-Boot/rk3528/Default)
+  NAME:=E20C
+  BUILD_DEVICES:= \
+    radxa_e20c
+endef
+
+define U-Boot/rock-2-rk3528
+  $(U-Boot/rk3528/Default)
+  NAME:=ROCK 2A/2F
+  BUILD_DEVICES:= \
+    radxa_rock-2a \
+    radxa_rock-2f
 endef
 
 
@@ -301,7 +347,7 @@ endef
 
 define U-Boot/radxa-e25-rk3568
   $(U-Boot/rk3568/Default)
-  DEPENDS:=+PACKAGE_u-boot-$(1):trusted-firmware-a-rk3568-e25
+  DEPENDS:=+PACKAGE_u-boot-$(1):trusted-firmware-a-rk3568-tpl-e25
   TPL:=$(RK3568_TPL_E25)
   NAME:=E25
   BUILD_DEVICES:= \
@@ -342,6 +388,37 @@ define U-Boot/xiguapi-v3-rk3568
   BUILD_DEVICES:= \
     nlnet_xiguapi-v3
 endef
+
+# RK3576 boards
+
+define U-Boot/rk3576/Default
+  BUILD_SUBTARGET:=armv8
+  DEPENDS:=+PACKAGE_u-boot-$(1):trusted-firmware-a-rk3576
+  ATF:=$(RK3576_ATF)
+  TPL:=$(RK3576_TPL)
+endef
+
+define U-Boot/generic-rk3576
+  $(U-Boot/rk3576/Default)
+  NAME:=Generic RK3576
+  BUILD_DEVICES:= \
+    friendlyarm_nanopi-r76s
+endef
+
+define U-Boot/photonicat2-rk3576
+  $(U-Boot/rk3576/Default)
+  NAME:=Photonicat2
+  BUILD_DEVICES:= \
+    ariaboard_photonicat2
+endef
+
+define U-Boot/rock-4d-rk3576
+  $(U-Boot/rk3576/Default)
+  NAME:=ROCK 4D
+  BUILD_DEVICES:= \
+    radxa_rock-4d
+endef
+
 
 # RK358x boards
 
@@ -454,11 +531,16 @@ UBOOT_TARGETS := \
   nanopi-r2c-rk3328 \
   nanopi-r2c-plus-rk3328 \
   nanopi-r2s-rk3328 \
+  nanopi-r2s-plus-rk3328 \
   orangepi-r1-plus-rk3328 \
   orangepi-r1-plus-lts-rk3328 \
   roc-cc-rk3328 \
   rock64-rk3328 \
   rock-pi-e-rk3328 \
+  mangopi-m28c-rk3528 \
+  mangopi-m28k-rk3528 \
+  radxa-e20c-rk3528 \
+  rock-2-rk3528 \
   nanopi-r3s-rk3566 \
   radxa-cm3-io-rk3566 \
   radxa-zero-3-rk3566 \
@@ -480,9 +562,12 @@ UBOOT_TARGETS := \
   rock-3a-rk3568 \
   rock-3b-rk3568 \
   sige3-rk3568 \
+  generic-rk3576 \
+  photonicat2-rk3576 \
+  rock-4d-rk3576 \
   cyber3588-aib-rk3588 \
-  generic-rk3588 \
   nanopc-t6-rk3588 \
+  generic-rk3588 \
   orangepi-5-plus-rk3588 \
   rock-5-itx-rk3588 \
   rock5b-rk3588 \
@@ -507,11 +592,22 @@ UBOOT_CUSTOMIZE_CONFIG := \
 		--disable EFI_CAPSULE_FIRMWARE_RAW \
 		--disable SPL_FIT_SIGNATURE \
 		--disable USB_FUNCTION_FASTBOOT \
+		--disable VIDEO \
 	)
 
 UBOOT_MAKE_FLAGS += \
   BL31=$(STAGING_DIR_IMAGE)/$(ATF) \
   $(if $(TPL),ROCKCHIP_TPL=$(STAGING_DIR_IMAGE)/$(TPL))
+
+define Build/Configure
+	$(call Build/Configure/U-Boot)
+
+ifneq ($(filter %rk3576,$(BUILD_VARIANT)),)
+	$(TARGET_CC) -nostdlib -ffreestanding -Os -S -o $(PKG_BUILD_DIR)/rk3576-boost.S $(PKG_BUILD_DIR)/rk3576-boost.c
+	$(TARGET_CROSS)as -o $(PKG_BUILD_DIR)/rk3576-boost.o $(PKG_BUILD_DIR)/rk3576-boost.S
+	$(TARGET_CROSS)objcopy -O binary -j .text $(PKG_BUILD_DIR)/rk3576-boost.o $(PKG_BUILD_DIR)/rk3576-boost.bin
+endif
+endef
 
 define Build/InstallDev
 	$(INSTALL_DIR) $(STAGING_DIR_IMAGE)

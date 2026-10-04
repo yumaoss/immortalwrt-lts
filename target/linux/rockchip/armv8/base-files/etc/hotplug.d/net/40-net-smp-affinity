@@ -31,6 +31,7 @@ set_interface_core() {
 case "$(board_name)" in
 9tripod,x3568-v4|\
 ariaboard,photonicat|\
+ariaboard,photonicat2|\
 armsom,sige3|\
 armsom,sige7|\
 ezpro,mrkaio-m68s|\
@@ -58,6 +59,7 @@ friendlyarm,nanopc-t6)
 friendlyarm,nanopi-r2c|\
 friendlyarm,nanopi-r2c-plus|\
 friendlyarm,nanopi-r2s|\
+friendlyarm,nanopi-r2s-plus|\
 radxa,rockpi-e|\
 xunlong,orangepi-r1-plus|\
 xunlong,orangepi-r1-plus-lts)
@@ -68,7 +70,9 @@ friendlyarm,nanopi-r4s|\
 friendlyarm,nanopi-r4se|\
 friendlyarm,nanopi-r4s-enterprise|\
 friendlyarm,nanopi-r6c|\
-radxa,rock-5-itx)
+friendlyarm,nanopi-r76s|\
+radxa,rock-5-itx|\
+radxa,rock-5t)
 	set_interface_core 10 "eth0"
 	set_interface_core 20 "eth1"
 	;;
@@ -79,8 +83,7 @@ friendlyarm,nanopi-r5s)
 	;;
 friendlyarm,nanopi-r6s|\
 radxa,rock-5a|\
-radxa,rock-5c|\
-radxa,rock-5t)
+radxa,rock-5c)
 	set_interface_core 10 "eth0"
 	set_interface_core 20 "eth1"
 	set_interface_core 40 "eth2"
@@ -96,6 +99,11 @@ lyt,t68m)
 	set_interface_core 2 "lan2"
 	set_interface_core 4 "lan3"
 	set_interface_core 8 "lan4"
+	;;
+radxa,e20c|\
+widora,mangopi-m28c|\
+widora,mangopi-m28k)
+	set_interface_core 2 "eth0"
 	;;
 radxa,e52c)
 	set_interface_core 10 "lan"

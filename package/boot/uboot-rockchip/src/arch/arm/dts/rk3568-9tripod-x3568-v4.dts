@@ -227,6 +227,14 @@
 	};
 };
 
+&can1 {
+	assigned-clocks = <&cru CLK_CAN1>;
+	assigned-clock-rates = <150000000>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&can1m1_pins>;
+	status = "okay";
+};
+
 /* used for usb_host0_xhci */
 &combphy0 {
 	status = "okay";
